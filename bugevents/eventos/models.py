@@ -75,3 +75,15 @@ class Turno(models.Model):
 
     def __str__(self):
         return f"{self.nombre}"
+
+'''
+Materiales -> Entidad del sistema 
+Clase relacionada -> CD37 [Entity]
+'''
+class Material(models.Model):
+    actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=200)
+    cantidad = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.descripcion}, {self.cantidad}" 

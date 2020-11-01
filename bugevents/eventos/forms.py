@@ -3,7 +3,7 @@ from datetime import date
 from django.forms import ModelForm, TextInput
 from django.core.exceptions import ValidationError
 
-from .models import Ambiente, Evento, Turno
+from .models import Ambiente, Evento, Turno, Material
 
 
 '''
@@ -60,3 +60,22 @@ class TurnoForm(ModelForm):
         hora_fin = self.cleaned_data.get('hora_fin')
         if hora_inicio > hora_fin:
             raise ValidationError("La hora de inicio no puede ser posterior a la hora de fin.")
+'''
+MaterialForm -> Formulario de creacion, modificacion y validacion de Materiales
+clase relacionada -> CD46 [Control]
+Casos de uso relacionados -> {BE13, BE14}
+'''
+class MaterialForm(ModelForm):
+    class Meta:
+        model = Material
+        fields = '__all__'
+        widgets = {
+            'cantidad': TextInput(attrs={"type": "number",
+                                      "min": "1"})
+        }
+
+    def clean(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        cantidad = self.cleaned_data.get('cantidad')
+        if cantidad <= 0:
+            raise ValidationError("La cantidad debe ser un número mayor a 0.") 
