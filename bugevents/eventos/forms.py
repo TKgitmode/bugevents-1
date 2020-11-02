@@ -69,13 +69,6 @@ class MaterialForm(ModelForm):
     class Meta:
         model = Material
         fields = '__all__'
-        widgets = {
-            'cantidad': TextInput(attrs={"type": "number",
-                                      "min": "1"})
-        }
 
     def clean(self):
         descripcion = self.cleaned_data.get('descripcion')
-        cantidad = self.cleaned_data.get('cantidad')
-        if cantidad <= 0:
-            raise ValidationError("La cantidad debe ser un número mayor a 0.") 
